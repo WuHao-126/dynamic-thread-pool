@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: dynamic-thread-pool-admin
+  redis:
+    host: localhost
+    password: 12345678
+    port: 6379
+server:
+  port: 1345
+
