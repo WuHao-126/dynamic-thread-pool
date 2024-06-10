@@ -52,6 +52,12 @@ public class ThreadPoolConfigEntity {
      */
     private int remainingCapacity;
 
+    /**
+     * 阈值
+     */
+    private int thresholdSize;
+
+
     public ThreadPoolConfigEntity() {
     }
 
@@ -59,6 +65,15 @@ public class ThreadPoolConfigEntity {
         this.appName = appName;
         this.threadPoolName = threadPoolName;
     }
+
+    public int getThresholdSize() {
+        return thresholdSize;
+    }
+
+    public void setThresholdSize(int thresholdSize) {
+        this.thresholdSize = thresholdSize;
+    }
+
 
     public String getAppName() {
         return appName;

@@ -20,4 +20,6 @@ public interface IDynamicThreadPoolService {
     ThreadPoolConfigEntity queryThreadPoolByName(String threadPoolName);
 
     void updateThreadPoolConfig(ThreadPoolConfigEntity threadPoolConfigEntity);
+
+    String getApplicationName();
 }

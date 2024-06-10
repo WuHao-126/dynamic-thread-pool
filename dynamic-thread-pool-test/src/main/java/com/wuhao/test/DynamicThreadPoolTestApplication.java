@@ -5,8 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 @SpringBootApplication
@@ -18,33 +21,50 @@ public class DynamicThreadPoolTestApplication {
 
 
     @Bean
-    public ApplicationRunner applicationRunner(ExecutorService threadPoolExecutor01) {
+    public ApplicationRunner applicationRunner(Map<String, ThreadPoolExecutor> map) {
+        ThreadPoolExecutor threadPoolExecutor01 = map.get("threadPoolExecutor01");
         return args -> {
+            int taskNumber = 0;
             while (true){
-                // 创建一个随机时间生成器
-                Random random = new Random();
-                // 随机时间，用于模拟任务启动延迟
-                int initialDelay = random.nextInt(10) + 1; // 1到10秒之间
-                // 随机休眠时间，用于模拟任务执行时间
-                int sleepTime = random.nextInt(10) + 1; // 1到10秒之间
-
-                // 提交任务到线程池
-                threadPoolExecutor01.submit(() -> {
-                    try {
-                        // 模拟任务启动延迟
-                        TimeUnit.SECONDS.sleep(initialDelay);
-                        System.out.println("Task started after " + initialDelay + " seconds.");
-
-                        // 模拟任务执行
-                        TimeUnit.SECONDS.sleep(sleepTime);
-                        System.out.println("Task executed for " + sleepTime + " seconds.");
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt();
-                    }
-                });
-
-                Thread.sleep(random.nextInt(50) + 1);
+                try {
+                    threadPoolExecutor01.execute(() -> {
+                        try {
+                            // 模拟任务执行时间
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+                    });
+                } catch (RejectedExecutionException e) {
+                    taskNumber++;
+                    System.out.println("Task " + taskNumber + " was rejected: " + e);
+                }
             }
         };
     }
+
+//    @Bean
+//    public ApplicationRunner applicationRunners(Map<String, ThreadPoolExecutor> map) {
+//        ThreadPoolExecutor threadPoolExecutor02 = map.get("threadPoolExecutor02");
+//        return args -> {
+//            int taskNumber = 0;
+//            while (true){
+//                try {
+//                    threadPoolExecutor02.execute(() -> {
+//                        try {
+//                            // 模拟任务执行时间
+//                            Thread.sleep(1000);
+//                        } catch (InterruptedException e) {
+//                            Thread.currentThread().interrupt();
+//                        }
+//                    });
+//                } catch (RejectedExecutionException e) {
+//                    taskNumber++;
+//                    System.out.println("Task " + taskNumber + " was rejected: " + e);
+//                }
+//            }
+//        };
+//    }
+
+
 }

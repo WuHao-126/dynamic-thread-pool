@@ -2,11 +2,7 @@ package com.wuhao.sdk.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-/**
- * @author Fuzhengwei bugstack.cn @小傅哥
- * @description 动态线程池配置
- * @create 2024-05-12 16:23
- */
+
 @ConfigurationProperties(prefix = "dynamic.thread.pool.config", ignoreInvalidFields = true)
 public class DynamicThreadPoolAutoProperties {
 
