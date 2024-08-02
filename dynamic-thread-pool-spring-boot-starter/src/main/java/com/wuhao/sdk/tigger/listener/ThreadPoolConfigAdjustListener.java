@@ -17,6 +17,7 @@ import java.util.List;
  */
 @Slf4j
 public class ThreadPoolConfigAdjustListener implements MessageListener<ThreadPoolConfigEntity> {
+
     private final IDynamicThreadPoolService dynamicThreadPoolService;
 
     private final IRegistry registry;

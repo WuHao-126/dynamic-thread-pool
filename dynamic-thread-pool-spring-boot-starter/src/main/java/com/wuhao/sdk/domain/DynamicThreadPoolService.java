@@ -72,14 +72,6 @@ public class DynamicThreadPoolService implements IDynamicThreadPoolService{
         }
         ThreadPoolExecutor threadPoolExecutor = threadPoolExecutorMap.get(threadPoolConfigEntity.getThreadPoolName());
         if (null == threadPoolExecutor) return;
-        // 设置参数 「调整核心线程数和最大线程数」
-        //1、判断修改后的核心线程数是否小于当前工作线程数
-        int activeCount = threadPoolExecutor.getActiveCount();  //当前活跃线程
-        int updateCorePoolSize = threadPoolConfigEntity.getCorePoolSize();  //待修改核心线程数
-        int corePoolSize = threadPoolExecutor.getCorePoolSize(); //原设核心线程数
-        if(updateCorePoolSize < activeCount){
-
-        }
         threadPoolExecutor.setCorePoolSize(threadPoolConfigEntity.getCorePoolSize());
         threadPoolExecutor.setMaximumPoolSize(threadPoolConfigEntity.getMaximumPoolSize());
     }

@@ -20,28 +20,28 @@ public class DynamicThreadPoolTestApplication {
     }
 
 
-    @Bean
-    public ApplicationRunner applicationRunner(Map<String, ThreadPoolExecutor> map) {
-        ThreadPoolExecutor threadPoolExecutor01 = map.get("threadPoolExecutor01");
-        return args -> {
-            int taskNumber = 0;
-            while (true){
-                try {
-                    threadPoolExecutor01.execute(() -> {
-                        try {
-                            // 模拟任务执行时间
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
-                        }
-                    });
-                } catch (RejectedExecutionException e) {
-                    taskNumber++;
-                    System.out.println("Task " + taskNumber + " was rejected: " + e);
-                }
-            }
-        };
-    }
+//    @Bean
+//    public ApplicationRunner applicationRunner(Map<String, ThreadPoolExecutor> map) {
+//        ThreadPoolExecutor threadPoolExecutor01 = map.get("threadPoolExecutor01");
+//        return args -> {
+//            int taskNumber = 0;
+//            while (true){
+//                try {
+//                    threadPoolExecutor01.execute(() -> {
+//                        try {
+//                            // 模拟任务执行时间
+//                            Thread.sleep(1000);
+//                        } catch (InterruptedException e) {
+//                            Thread.currentThread().interrupt();
+//                        }
+//                    });
+//                } catch (RejectedExecutionException e) {
+//                    taskNumber++;
+//                    System.out.println("Task " + taskNumber + " was rejected: " + e);
+//                }
+//            }
+//        };
+//    }
 
 //    @Bean
 //    public ApplicationRunner applicationRunners(Map<String, ThreadPoolExecutor> map) {
